@@ -27,4 +27,8 @@ class ShiftGenerator
   def square_date(date_param)
     (date_param.to_i ** 2).to_s
   end
+
+  def last_4_digits(squared_date_param)
+    squared_date_param[-4..-1]
+  end
 end

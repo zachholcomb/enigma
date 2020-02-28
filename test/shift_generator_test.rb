@@ -32,8 +32,13 @@ class ShiftGeneratorTest < Minitest::Test
     assert_equal 4, @shift_generator.separate_random_key(random_test_key).values.length
   end
 
-  def test_it_can_square_date
+  def test_it_can_square_date_parameter
     test_date = "270220"
     assert_equal "73018848400", @shift_generator.square_date(test_date)
+  end
+
+  def test_it_can_get_last_4_digits_from_sqaure_date
+    squared_date_param = "73018848400"
+    assert_equal "8400", @shift_generator.last_4_digits(squared_date_param)
   end
 end
