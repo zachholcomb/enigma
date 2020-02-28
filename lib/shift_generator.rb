@@ -23,4 +23,8 @@ class ShiftGenerator
       keyD: five_digit_key[3..4]
     }
   end
+
+  def square_date(date_param)
+    (date_param.to_i ** 2).to_s
+  end
 end

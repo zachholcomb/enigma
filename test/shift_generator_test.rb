@@ -32,7 +32,8 @@ class ShiftGeneratorTest < Minitest::Test
     assert_equal 4, @shift_generator.separate_random_key(random_test_key).values.length
   end
 
-  def test_it_can_get_offset_keys_by_todays_date
-
+  def test_it_can_square_date
+    test_date = "270220"
+    assert_equal "73018848400", @shift_generator.square_date(test_date)
   end
 end
