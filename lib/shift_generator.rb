@@ -16,11 +16,11 @@ class ShiftGenerator
     rand_num
   end
 
-  def separate_random_key(five_digit_key)
-    { keyA: five_digit_key[0..1],
-      keyB: five_digit_key[1..2],
-      keyC: five_digit_key[2..3],
-      keyD: five_digit_key[3..4]
+  def separate_random_key(five_digit_key)#refactor to dynamic
+    { key_A: five_digit_key[0..1],
+      key_B: five_digit_key[1..2],
+      key_C: five_digit_key[2..3],
+      key_D: five_digit_key[3..4]
     }
   end
 
@@ -30,5 +30,13 @@ class ShiftGenerator
 
   def last_4_digits(squared_date_param)
     squared_date_param[-4..-1]
+  end
+
+  def separate_last_4_digits(last_four_digits_param)#refactor to dynamic
+    { key_a: last_four_digits_param[0],
+      key_b: last_four_digits_param[1],
+      key_c: last_four_digits_param[2],
+      key_d: last_four_digits_param[3]
+    }
   end
 end
