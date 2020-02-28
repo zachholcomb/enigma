@@ -16,11 +16,11 @@ class ShiftGenerator
     rand_num
   end
 
-  def separate_random_key(five_digit_key)#refactor to dynamic
-    { key_A: five_digit_key[0..1],
-      key_B: five_digit_key[1..2],
-      key_C: five_digit_key[2..3],
-      key_D: five_digit_key[3..4]
+  def separate_random_key(five_digit_key)
+    { key_A: five_digit_key[0..1].to_i,
+      key_B: five_digit_key[1..2].to_i,
+      key_C: five_digit_key[2..3].to_i,
+      key_D: five_digit_key[3..4].to_i
     }
   end
 
@@ -28,15 +28,23 @@ class ShiftGenerator
     (date_param.to_i ** 2).to_s
   end
 
-  def last_4_digits(squared_date_param)
+  def last_four_digits(squared_date_param)
     squared_date_param[-4..-1]
   end
 
   def separate_last_4_digits(last_four_digits_param)#refactor to dynamic
-    { key_a: last_four_digits_param[0],
-      key_b: last_four_digits_param[1],
-      key_c: last_four_digits_param[2],
-      key_d: last_four_digits_param[3]
+    { key_A: last_four_digits_param[0].to_i,
+      key_B: last_four_digits_param[1].to_i,
+      key_C: last_four_digits_param[2].to_i,
+      key_D: last_four_digits_param[3].to_i
     }
+  end
+
+  def final_shift_values(five_digit_key, last_four_digits_param)
+    random_key_hash = separate_random_key(five_digit_key)
+    date_offset_hash = separate_last_4_digits(last_four_digits_param)
+    random_key_hash.merge(date_offset_hash) do |key, random_value, date_value|
+      random_value + date_value
+    end
   end
 end

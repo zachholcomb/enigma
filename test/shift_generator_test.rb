@@ -24,7 +24,7 @@ class ShiftGeneratorTest < Minitest::Test
   end
 
   def test_it_can_split_return_value_of_generate_random_key_into_separate_keys
-    expected = { :key_A => "02", :key_B => "27", :key_C => "71", :key_D => "15"}
+    expected = { :key_A => 02, :key_B => 27, :key_C => 71, :key_D => 15}
     assert_equal expected, @shift_generator.separate_random_key("02715")
 
     random_test_key = @shift_generator.generate_random_key
@@ -39,12 +39,17 @@ class ShiftGeneratorTest < Minitest::Test
 
   def test_it_can_get_last_4_digits_from_sqaure_date
     squared_date_param = "73018848400"
-    assert_equal "8400", @shift_generator.last_4_digits(squared_date_param)
+    assert_equal "8400", @shift_generator.last_four_digits(squared_date_param)
   end
 
   def test_it_can_separate_last_4_digits_from_square_dates_into_keys
     four_digits = "8400"
-    expected = {key_a: "8", key_b: "4", key_c: "0", key_d: "0"}
+    expected = {key_A: 8, key_B: 4, key_C: 0, key_D: 0}
     assert_equal expected, @shift_generator.separate_last_4_digits(four_digits)
+  end
+
+  def test_it_can_get_final_shift_values
+    expected = {key_A: 10, key_B: 31, key_C: 71, key_D: 15}
+    assert_equal expected, @shift_generator.final_shift_values("02715", "8400")
   end
 end
