@@ -24,22 +24,6 @@ class ShiftGenerator
     }
   end
 
-  def square_date(date_param)
-    (date_param.to_i ** 2).to_s
-  end
-
-  def last_four_digits(squared_date_param)
-    squared_date_param[-4..-1]
-  end
-
-  def separate_last_4_digits(last_four_digits_param)#refactor to dynamic
-    { key_A: last_four_digits_param[0].to_i,
-      key_B: last_four_digits_param[1].to_i,
-      key_C: last_four_digits_param[2].to_i,
-      key_D: last_four_digits_param[3].to_i
-    }
-  end
-
   def final_shift_values(five_digit_key, last_four_digits_param)
     random_key_hash = separate_random_key(five_digit_key)
     date_offset_hash = separate_last_4_digits(last_four_digits_param)
