@@ -15,7 +15,7 @@ class OffsetGen
     squared_date_param[-4..-1]
   end
 
-  def separate_last_4_digits(last_four_digits_param)#refactor to dynamic
+  def create_offset(last_four_digits_param)#refactor to dynamic
     { key_A: last_four_digits_param[0].to_i,
       key_B: last_four_digits_param[1].to_i,
       key_C: last_four_digits_param[2].to_i,
