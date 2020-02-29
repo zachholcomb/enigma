@@ -3,6 +3,7 @@ require './lib/cipher'
 
 class CipherTest < Minitest::Test
   def setup
+    Date.stubs(:today).returns(Date.new(1995, 8, 4))
     @cipher = Cipher.new
   end
 
@@ -24,12 +25,14 @@ class CipherTest < Minitest::Test
       "w", "x", "y", "z", " "]
     assert_equal expected, @cipher.character_set
 
-    @cipher.stubs(:generate_random_key).returns("02715")
+    @cipher.stubs(:default_key).returns("02715")
     assert_instance_of String, @cipher.default_key
     assert_equal 5, @cipher.default_key.length
+    assert_equal "02715", @cipher.default_key
+    assert_equal "040895", @cipher.default_date
   end
 
   def test_it_can_encrypt_a_message_with_default_values
-    assert_equal "keder ohulw", @cipher.encrypt("hello world")
+    assert_equal "keder ohulw", @cipher.encrypt("hello world", "02715", "040895")
   end
 end

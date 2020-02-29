@@ -9,9 +9,11 @@ class ShiftGenerator
     @offset = OffsetGen.new
   end
 
-  def shift_key(five_digit_key, last_four_digits_param)
+  def shift_key(five_digit_key, date)
     random_key_hash = @key.create_key(five_digit_key)
-    date_offset_hash = @offset.create_offset(last_four_digits_param)
+    date_param = @offset.last_four_digits(@offset.square_date(date))
+    
+    date_offset_hash = @offset.create_offset(date_param)
     random_key_hash.merge(date_offset_hash) do |key, random_value, date_value|
       random_value + date_value
     end

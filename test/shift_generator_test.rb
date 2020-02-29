@@ -32,6 +32,6 @@ class ShiftGeneratorTest < Minitest::Test
 
   def test_it_can_get_final_shift_values
     expected = {key_A: 10, key_B: 31, key_C: 71, key_D: 15}
-    assert_equal expected, @shift_generator.shift_key("02715", "8400")
+    assert_equal expected, @shift_generator.shift_key("02715", "260220")
   end
 end
