@@ -1,12 +1,6 @@
 require 'date'
 
 class OffsetGen
-  attr_reader :date
-
-  def initialize(date = Date.today.strftime('%d%m%y'))
-    @date = date
-  end
-
   def square_date(date_param)
     (date_param.to_i ** 2).to_s
   end

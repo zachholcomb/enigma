@@ -3,16 +3,11 @@ require './lib/offset_gen'
 
 class OffsetGenTest < Minitest::Test
   def setup
-    Date.stubs(:today).returns(Date.new(2020, 02, 26))
     @offset_gen = OffsetGen.new
   end
 
   def test_it_exists
     assert_instance_of OffsetGen, @offset_gen
-  end
-
-  def test_it_has_attributes
-    assert_equal "260220", @offset_gen.date
   end
 
   def test_it_can_square_date_parameter

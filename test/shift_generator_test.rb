@@ -14,10 +14,6 @@ class ShiftGeneratorTest < Minitest::Test
   def test_it_has_attributes
     assert_instance_of KeyGen, @shift_generator.key
     assert_instance_of OffsetGen, @shift_generator.offset
-    @shift_generator.stubs(:generate_random_key).returns("02715")
-    assert_instance_of String, @shift_generator.key.num
-    assert_equal 5, @shift_generator.key.num.length
-    assert_equal "260220", @shift_generator.offset.date
   end
 
   def test_it_can_generate_random_five_digit_number_key

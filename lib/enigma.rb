@@ -3,6 +3,5 @@ class Enigma
 
   def initialize
     @character_set = ("a".."z").to_a << " "
-    @shift_generator = ShiftGenerator.new
   end
 end
