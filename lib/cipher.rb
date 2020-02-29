@@ -17,7 +17,12 @@ class Cipher
   end
 
   def chop_message(message)
+    message.downcase.split("").each_slice(4).to_a
+  end
 
+  def encrypt_chop(letter, shift)
+    encrypted_set = Hash[@character_set.zip(@character_set.rotate(shift))]
+    encrypted_set.fetch(letter)
   end
 
   def encrypt(message, key = @default_key, date = @default_date)

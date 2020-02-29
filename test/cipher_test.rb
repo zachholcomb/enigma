@@ -32,6 +32,15 @@ class CipherTest < Minitest::Test
     assert_equal "040895", @cipher.default_date
   end
 
+  def test_it_can_chop_message
+    expected = [['h', 'e', 'l', 'l'], ['o', ' ', 'w', 'o'], ['r', 'l', 'd']]
+    assert_equal expected, @cipher.chop_message("hello world")
+  end
+
+  def test_it_can_encrypt_chop
+    assert_equal 'k', @cipher.encrypt_chop('h', 3)
+  end
+
   def test_it_can_encrypt_a_message_with_default_values
     assert_equal "keder ohulw", @cipher.encrypt("hello world", "02715", "040895")
   end
