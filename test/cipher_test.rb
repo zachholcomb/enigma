@@ -74,4 +74,18 @@ class CipherTest < Minitest::Test
     expected = [3, 27, 73, 20]
     assert_equal "hello world", @cipher.decrypt_message("keder ohulw", expected)
   end
+
+  def test_it_can_verify_key
+    assert_equal true, @cipher.shift_generator.key.verify_key("02715")
+    assert_equal false, @cipher.shift_generator.key.verify_key("999999")
+  end
+
+  def test_it_can_verify_input
+    expected = [[3, 27, 73, 20], "02715", "040895"]
+    assert_equal expected, @cipher.input_verification("02715", "040895")
+
+    @cipher.stubs(:default_key).returns("02715")
+    @cipher.stubs(:default_date).returns("040895")
+    assert_equal expected, @cipher.input_verification
+  end
 end
