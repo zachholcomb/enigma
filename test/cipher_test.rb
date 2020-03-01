@@ -94,4 +94,62 @@ class CipherTest < Minitest::Test
 
     assert_equal expected, @cipher.encrypt("hello world", "270220")
   end
+
+  def test_it_can_decrypt_letter
+    assert_equal 'h', @cipher.decrypt_letter('k', 3)
+    assert_equal 'e', @cipher.decrypt_letter('e', 27)
+    assert_equal 'l', @cipher.decrypt_letter('d', 73)
+    assert_equal 'l', @cipher.decrypt_letter('e', 20)
+  end
+
+  def test_it_can_decrypt_chunk
+    expected = [3, 27, 73, 20]
+
+    assert_equal ['h', 'e', 'l', 'l'],
+    @cipher.decrypt_chop(['k', 'e', 'd', 'e'], expected)
+  end
+
+  def test_it_can_decrypt_a_message_with_default_values
+    @cipher.stubs(:default_key).returns("02715")
+    expected = {
+      decryption: "hello world",
+      key: "02715",
+      date: "040895"
+    }
+    assert_equal expected, @cipher.decrypt("keder ohulw")
+  end
+
+  def test_it_can_decrypt_a_message_with_given_date_and_given_key
+    expected = {
+      decryption: "hello world",
+      key: "02715",
+      date: "270220"
+    }
+
+    assert_equal expected, @cipher.decrypt("rib ydmcapu", "02715", "270220")
+  end
+
+  def test_it_can_decrypt_a_message_with_given_key
+    @cipher.stubs(:default_date).returns("270220")
+
+    expected = {
+      decryption: "hello world",
+      key: "02715",
+      date: "270220"
+    }
+
+    assert_equal expected, @cipher.decrypt("rib ydmcapu", "02715")
+  end
+
+  def test_it_can_decrypt_a_message_with_given_date
+    @cipher.stubs(:default_key).returns("02715")
+
+    expected = {
+      decryption: "hello world",
+      key: "02715",
+      date: "270220"
+    }
+
+    assert_equal expected, @cipher.decrypt("rib ydmcapu", "270220")
+  end
 end

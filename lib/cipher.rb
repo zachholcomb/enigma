@@ -25,6 +25,17 @@ class Cipher
     encrypted_set.fetch(letter)
   end
 
+  def decrypt_letter(letter, shift)
+    encrypted_set = Hash[@character_set.zip(@character_set.rotate(-shift))]
+    encrypted_set.fetch(letter)
+  end
+
+  def decrypt_chop(chop, shift_key)
+    chop.map.with_index do |letter, index|
+      decrypt_letter(letter, (shift_key[index]))
+    end
+  end
+
   def encrypt_chop(chop, shift_key)
     chop.map.with_index do |letter, index|
       encrypt_letter(letter, shift_key[index])
@@ -44,6 +55,24 @@ class Cipher
     end.join
 
     { encryption: encrypted_message,
+      key: key,
+      date: date
+    }
+  end
+
+  def decrypt(message, key = self.default_key, date = self.default_date)
+    if key.length != 5
+      date = key
+      key = self.default_key
+    end
+
+    shift = @shift_generator.shift_key(key, date)
+
+    decrypted_message = chop_message(message).map do |chunk|
+      decrypt_chop(chunk, shift)
+    end.join
+
+    { decryption: decrypted_message,
       key: key,
       date: date
     }
