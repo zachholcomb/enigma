@@ -1,5 +1,3 @@
-require 'date'
-
 class OffsetGen
   def square_date(date_param)
     (date_param.to_i ** 2).to_s

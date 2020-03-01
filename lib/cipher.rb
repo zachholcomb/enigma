@@ -56,31 +56,11 @@ class Cipher
     end
   end
 
-  def encrypt(message, key = self.default_key, date = self.default_date)
+  def input_verification(key = self.default_key, date = self.default_date)
     if !@shift_generator.key.verify_key(key)
       date = key
       key = self.default_key
     end
-
-    shift = @shift_generator.shift_key(key, date)
-
-    { encryption: encrypt_message(message, shift),
-      key: key,
-      date: date
-    }
-  end
-
-  def decrypt(message, key = self.default_key, date = self.default_date)
-    if !@shift_generator.key.verify_key(key)
-      date = key
-      key = self.default_key
-    end
-
-    shift = @shift_generator.shift_key(key, date)
-
-    { decryption: decrypt_message(message, shift),
-      key: key,
-      date: date
-    }
+    [@shift_generator.shift_key(key, date), key, date]
   end
 end

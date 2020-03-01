@@ -56,50 +56,6 @@ class CipherTest < Minitest::Test
     assert_equal "keder ohulw", @cipher.encrypt_message("hello world", expected)
   end
 
-  def test_it_can_encrypt_a_message_with_default_values
-    @cipher.stubs(:default_key).returns("02715")
-    expected = {
-      encryption: "keder ohulw",
-      key: "02715",
-      date: "040895"
-    }
-    assert_equal expected, @cipher.encrypt("hello world")
-  end
-
-  def test_it_can_encrypt_a_message_with_given_date_and_given_key
-    expected = {
-      encryption: "rib ydmcapu",
-      key: "02715",
-      date: "270220"
-    }
-
-    assert_equal expected, @cipher.encrypt("hello world", "02715", "270220")
-  end
-
-  def test_it_can_encrypt_a_message_with_given_key
-    @cipher.stubs(:default_date).returns("270220")
-
-    expected = {
-      encryption: "rib ydmcapu",
-      key: "02715",
-      date: "270220"
-    }
-
-    assert_equal expected, @cipher.encrypt("hello world", "02715")
-  end
-
-  def test_it_can_encrypt_a_message_with_given_date
-    @cipher.stubs(:default_key).returns("02715")
-
-    expected = {
-      encryption: "rib ydmcapu",
-      key: "02715",
-      date: "270220"
-    }
-
-    assert_equal expected, @cipher.encrypt("hello world", "270220")
-  end
-
   def test_it_can_decrypt_letter
     assert_equal 'h', @cipher.decrypt_letter('k', 3)
     assert_equal 'e', @cipher.decrypt_letter('e', 27)
@@ -117,69 +73,5 @@ class CipherTest < Minitest::Test
   def test_it_can_decrypt_message
     expected = [3, 27, 73, 20]
     assert_equal "hello world", @cipher.decrypt_message("keder ohulw", expected)
-  end
-
-  def test_it_can_decrypt_a_message_with_default_values
-    @cipher.stubs(:default_key).returns("02715")
-    expected = {
-      decryption: "hello world",
-      key: "02715",
-      date: "040895"
-    }
-    assert_equal expected, @cipher.decrypt("keder ohulw")
-  end
-
-  def test_it_can_decrypt_a_message_with_given_date_and_given_key
-    expected = {
-      decryption: "hello world",
-      key: "02715",
-      date: "270220"
-    }
-
-    assert_equal expected, @cipher.decrypt("rib ydmcapu", "02715", "270220")
-  end
-
-  def test_it_can_decrypt_a_message_with_given_key
-    @cipher.stubs(:default_date).returns("270220")
-
-    expected = {
-      decryption: "hello world",
-      key: "02715",
-      date: "270220"
-    }
-
-    assert_equal expected, @cipher.decrypt("rib ydmcapu", "02715")
-  end
-
-  def test_it_can_decrypt_a_message_with_given_date
-    @cipher.stubs(:default_key).returns("02715")
-
-    expected = {
-      decryption: "hello world",
-      key: "02715",
-      date: "270220"
-    }
-
-    assert_equal expected, @cipher.decrypt("rib ydmcapu", "270220")
-  end
-
-  def test_it_can_encrypt_a_message_with_special_characters
-    @cipher.stubs(:default_key).returns("02715")
-    expected = {
-      encryption: "keder ohulw!",
-      key: "02715",
-      date: "040895"
-    }
-    assert_equal expected, @cipher.encrypt("hello world!")
-  end
-
-  def test_it_can_decrypt_a_message_with_default_values
-    @cipher.stubs(:default_key).returns("02715")
-    expected = {
-      decryption: "hello world!",
-      key: "02715",
-      date: "040895"
-    }
-    assert_equal expected, @cipher.decrypt("keder ohulw!")
   end
 end
