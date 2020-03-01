@@ -34,16 +34,30 @@ class Cipher
   def encrypt(*args)
     if args.length == 1
       shift = @shift_generator.shift_key(self.default_key, self.default_date)
+      key = self.default_key
+      date = self.default_date
     elsif args.length == 2 && args[1].length == 5
+      key = args[1]
+      date = self.default_date
       shift = @shift_generator.shift_key(args[1], self.default_date)
     elsif args.length == 2 && args[1].length == 6
+      key = self.default_key
+      date = args[1]
       shift = @shift_generator.shift_key(self.default_key, args[1])
     elsif args.length == 3
+      key = args[1]
+      date = args[2]
       shift = @shift_generator.shift_key(args[1], args[2])
     end
 
-    chop_message(args[0]).map do |chunk|
+    encrypted_message = chop_message(args[0]).map do |chunk|
       encrypt_chop(chunk, shift)
     end.join
+
+    { encryption: encrypted_message,
+      key: key,
+      date: date
+    }
   end
+
 end

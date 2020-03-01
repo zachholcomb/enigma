@@ -53,20 +53,45 @@ class CipherTest < Minitest::Test
 
   def test_it_can_encrypt_a_message_with_default_values
     @cipher.stubs(:default_key).returns("02715")
-    assert_equal "keder ohulw", @cipher.encrypt("hello world")
+    expected = {
+      encryption: "keder ohulw",
+      key: "02715",
+      date: "040895"
+    }
+    assert_equal expected, @cipher.encrypt("hello world")
   end
 
   def test_it_can_encrypt_a_message_with_given_date_and_given_key
-    assert_equal "rib ydmcapu", @cipher.encrypt("hello world", "02715", "270220")
+    expected = {
+      encryption: "rib ydmcapu",
+      key: "02715",
+      date: "270220"
+    }
+
+    assert_equal expected, @cipher.encrypt("hello world", "02715", "270220")
   end
 
   def test_it_can_encrypt_a_message_with_given_key
     @cipher.stubs(:default_date).returns("270220")
-    assert_equal "rib ydmcapu", @cipher.encrypt("hello world", "02715")
+
+    expected = {
+      encryption: "rib ydmcapu",
+      key: "02715",
+      date: "270220"
+    }
+
+    assert_equal expected, @cipher.encrypt("hello world", "02715")
   end
 
   def test_it_can_encrypt_a_message_with_given_date
     @cipher.stubs(:default_key).returns("02715")
-    assert_equal "rib ydmcapu", @cipher.encrypt("hello world", "270220")
+
+    expected = {
+      encryption: "rib ydmcapu",
+      key: "02715",
+      date: "270220"
+    }
+
+    assert_equal expected, @cipher.encrypt("hello world", "270220")
   end
 end
