@@ -45,13 +45,28 @@ class CipherTest < Minitest::Test
   end
 
   def test_it_can_encrypt_chunk
-    expected =
+    expected = [3, 27, 73, 20]
 
     assert_equal ['k', 'e', 'd', 'e'],
-    @cipher.encrypt_chop(['h', 'e', 'l', 'l'])
+    @cipher.encrypt_chop(['h', 'e', 'l', 'l'], expected)
   end
-  #
-  # def test_it_can_encrypt_a_message_with_default_values
-  #   assert_equal "keder ohulw", @cipher.encrypt("hello world", "02715", "040895")
-  # end
+
+  def test_it_can_encrypt_a_message_with_default_values
+    @cipher.stubs(:default_key).returns("02715")
+    assert_equal "keder ohulw", @cipher.encrypt("hello world")
+  end
+
+  def test_it_can_encrypt_a_message_with_given_date_and_given_key
+    assert_equal "rib ydmcapu", @cipher.encrypt("hello world", "02715", "270220")
+  end
+
+  def test_it_can_encrypt_a_message_with_given_key
+    @cipher.stubs(:default_date).returns("270220")
+    assert_equal "rib ydmcapu", @cipher.encrypt("hello world", "02715")
+  end
+
+  def test_it_can_encrypt_a_message_with_given_date
+    @cipher.stubs(:default_key).returns("02715")
+    assert_equal "rib ydmcapu", @cipher.encrypt("hello world", "270220")
+  end
 end

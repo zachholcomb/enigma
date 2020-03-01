@@ -27,18 +27,23 @@ class Cipher
 
   def encrypt_chop(chop, shift_key)
     chop.map.with_index do |letter, index|
-      require "pry"; binding.pry
-      encrypt_letter(letter, @shift_generator.shift_key.values[index])
+      encrypt_letter(letter, shift_key[index])
     end
   end
 
-  def encrypt(message, key = @default_key, date = @default_date)
-    # @shift_generator.shift_key(key, date)
-    #
-    # chop_message(message).each do |chunk|
-    #   chunk.map.with_index do |letter, index|
-    #     require "pry"; binding.pry
-    #   end
-    # end
+  def encrypt(*args)
+    if args.length == 1
+      shift = @shift_generator.shift_key(self.default_key, self.default_date)
+    elsif args.length == 2 && args[1].length == 5
+      shift = @shift_generator.shift_key(args[1], self.default_date)
+    elsif args.length == 2 && args[1].length == 6
+      shift = @shift_generator.shift_key(self.default_key, args[1])
+    elsif args.length == 3
+      shift = @shift_generator.shift_key(args[1], args[2])
+    end
+
+    chop_message(args[0]).map do |chunk|
+      encrypt_chop(chunk, shift)
+    end.join
   end
 end
