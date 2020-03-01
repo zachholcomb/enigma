@@ -15,9 +15,7 @@ class Enigma < Cipher
   end
 
   def decrypt(message, key = self.default_key, date = self.default_date)
-    # require "pry"; binding.pry
     shift = input_verification(key, date)
-
     { decryption: decrypt_message(message, shift[0]),
       key: shift[1],
       date: shift[2]

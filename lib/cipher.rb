@@ -57,7 +57,7 @@ class Cipher
   end
 
   def input_verification(key = self.default_key, date = self.default_date)
-    if !@shift_generator.key.verify_key(key)
+    if !@shift_generator.key_gen.verify_key(key)
       date = key
       key = self.default_key
     end

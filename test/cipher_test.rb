@@ -76,8 +76,8 @@ class CipherTest < Minitest::Test
   end
 
   def test_it_can_verify_key
-    assert_equal true, @cipher.shift_generator.key.verify_key("02715")
-    assert_equal false, @cipher.shift_generator.key.verify_key("999999")
+    assert_equal true, @cipher.shift_generator.key_gen.verify_key("02715")
+    assert_equal false, @cipher.shift_generator.key_gen.verify_key("999999")
   end
 
   def test_it_can_verify_input
