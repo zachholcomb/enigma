@@ -10,10 +10,10 @@ class OffsetGen
   end
 
   def create_offset(last_four_digits_param)#refactor to dynamic
-    { key_A: last_four_digits_param[0].to_i,
-      key_B: last_four_digits_param[1].to_i,
-      key_C: last_four_digits_param[2].to_i,
-      key_D: last_four_digits_param[3].to_i
-    }
+    [ last_four_digits_param[0].to_i,
+      last_four_digits_param[1].to_i,
+      last_four_digits_param[2].to_i,
+      last_four_digits_param[3].to_i
+    ]
   end
 end

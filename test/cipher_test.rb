@@ -37,11 +37,21 @@ class CipherTest < Minitest::Test
     assert_equal expected, @cipher.chop_message("hello world")
   end
 
-  def test_it_can_encrypt_chop
-    assert_equal 'k', @cipher.encrypt_chop('h', 3)
+  def test_it_can_encrypt_letter
+    assert_equal 'k', @cipher.encrypt_letter('h', 3)
+    assert_equal 'e', @cipher.encrypt_letter('e', 27)
+    assert_equal 'd', @cipher.encrypt_letter('l', 73)
+    assert_equal 'e', @cipher.encrypt_letter('l', 20)
   end
 
-  def test_it_can_encrypt_a_message_with_default_values
-    assert_equal "keder ohulw", @cipher.encrypt("hello world", "02715", "040895")
+  def test_it_can_encrypt_chunk
+    expected =
+
+    assert_equal ['k', 'e', 'd', 'e'],
+    @cipher.encrypt_chop(['h', 'e', 'l', 'l'])
   end
+  #
+  # def test_it_can_encrypt_a_message_with_default_values
+  #   assert_equal "keder ohulw", @cipher.encrypt("hello world", "02715", "040895")
+  # end
 end
