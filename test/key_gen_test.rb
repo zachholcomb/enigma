@@ -18,4 +18,9 @@ class KeyGenTest < Minitest::Test
     assert_instance_of Array, @key_gen.create_key(random_test_key)
     assert_equal 4, @key_gen.create_key(random_test_key).length
   end
+
+  def test_it_can_verify_key
+    assert_equal true, @key_gen.verify_key("02715")
+    assert_equal false, @key_gen.verify_key("999999")
+  end
 end

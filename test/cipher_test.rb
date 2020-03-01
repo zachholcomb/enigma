@@ -51,6 +51,11 @@ class CipherTest < Minitest::Test
     @cipher.encrypt_chop(['h', 'e', 'l', 'l'], expected)
   end
 
+  def test_it_can_encrypt_message
+    expected = [3, 27, 73, 20]
+    assert_equal "keder ohulw", @cipher.encrypt_message("hello world", expected)
+  end
+
   def test_it_can_encrypt_a_message_with_default_values
     @cipher.stubs(:default_key).returns("02715")
     expected = {
@@ -107,6 +112,11 @@ class CipherTest < Minitest::Test
 
     assert_equal ['h', 'e', 'l', 'l'],
     @cipher.decrypt_chop(['k', 'e', 'd', 'e'], expected)
+  end
+
+  def test_it_can_decrypt_message
+    expected = [3, 27, 73, 20]
+    assert_equal "hello world", @cipher.decrypt_message("keder ohulw", expected)
   end
 
   def test_it_can_decrypt_a_message_with_default_values

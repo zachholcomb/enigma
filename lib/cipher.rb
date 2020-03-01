@@ -38,6 +38,18 @@ class Cipher
     end
   end
 
+  def encrypt_message(message, shift)
+    chop_message(message).map do |chunk|
+      encrypt_chop(chunk, shift)
+    end.join
+  end
+
+  def decrypt_message(message, shift)
+    chop_message(message).map do |chunk|
+      decrypt_chop(chunk, shift)
+    end.join
+  end
+
   def decrypt_chop(chop, shift_key)
     chop.map.with_index do |letter, index|
       decrypt_letter(letter, (shift_key[index]))
@@ -45,36 +57,28 @@ class Cipher
   end
 
   def encrypt(message, key = self.default_key, date = self.default_date)
-    if key.length != 5
+    if !@shift_generator.key.verify_key(key)
       date = key
       key = self.default_key
     end
 
     shift = @shift_generator.shift_key(key, date)
 
-    encrypted_message = chop_message(message).map do |chunk|
-      encrypt_chop(chunk, shift)
-    end.join
-
-    { encryption: encrypted_message,
+    { encryption: encrypt_message(message, shift),
       key: key,
       date: date
     }
   end
 
   def decrypt(message, key = self.default_key, date = self.default_date)
-    if key.length != 5
+    if !@shift_generator.key.verify_key(key)
       date = key
       key = self.default_key
     end
 
     shift = @shift_generator.shift_key(key, date)
 
-    decrypted_message = chop_message(message).map do |chunk|
-      decrypt_chop(chunk, shift)
-    end.join
-
-    { decryption: decrypted_message,
+    { decryption: decrypt_message(message, shift),
       key: key,
       date: date
     }
