@@ -152,4 +152,24 @@ class CipherTest < Minitest::Test
 
     assert_equal expected, @cipher.decrypt("rib ydmcapu", "270220")
   end
+
+  def test_it_can_encrypt_a_message_with_special_characters
+    @cipher.stubs(:default_key).returns("02715")
+    expected = {
+      encryption: "keder ohulw!",
+      key: "02715",
+      date: "040895"
+    }
+    assert_equal expected, @cipher.encrypt("hello world!")
+  end
+
+  def test_it_can_decrypt_a_message_with_default_values
+    @cipher.stubs(:default_key).returns("02715")
+    expected = {
+      decryption: "hello world!",
+      key: "02715",
+      date: "040895"
+    }
+    assert_equal expected, @cipher.decrypt("keder ohulw!")
+  end
 end

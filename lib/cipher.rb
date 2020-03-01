@@ -22,23 +22,25 @@ class Cipher
 
   def encrypt_letter(letter, shift)
     encrypted_set = Hash[@character_set.zip(@character_set.rotate(shift))]
+    return letter if !encrypted_set.keys.include?(letter)
     encrypted_set.fetch(letter)
   end
 
   def decrypt_letter(letter, shift)
-    encrypted_set = Hash[@character_set.zip(@character_set.rotate(-shift))]
-    encrypted_set.fetch(letter)
-  end
-
-  def decrypt_chop(chop, shift_key)
-    chop.map.with_index do |letter, index|
-      decrypt_letter(letter, (shift_key[index]))
-    end
+    decrypted_set = Hash[@character_set.zip(@character_set.rotate(-shift))]
+    return letter if !decrypted_set.keys.include?(letter)
+    decrypted_set.fetch(letter)
   end
 
   def encrypt_chop(chop, shift_key)
     chop.map.with_index do |letter, index|
       encrypt_letter(letter, shift_key[index])
+    end
+  end
+
+  def decrypt_chop(chop, shift_key)
+    chop.map.with_index do |letter, index|
+      decrypt_letter(letter, (shift_key[index]))
     end
   end
 
