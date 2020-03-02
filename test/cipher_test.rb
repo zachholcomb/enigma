@@ -51,7 +51,7 @@ class CipherTest < Minitest::Test
     @cipher.encrypt_chop(['h', 'e', 'l', 'l'], expected)
   end
 
-  def test_it_can_encrypt_message
+  def test_it_can_encrypt_whole_message
     expected = [3, 27, 73, 20]
     assert_equal "keder ohulw", @cipher.encrypt_message("hello world", expected)
   end
@@ -70,7 +70,7 @@ class CipherTest < Minitest::Test
     @cipher.decrypt_chop(['k', 'e', 'd', 'e'], expected)
   end
 
-  def test_it_can_decrypt_message
+  def test_it_can_decrypt_whole_message
     expected = [3, 27, 73, 20]
     assert_equal "hello world", @cipher.decrypt_message("keder ohulw", expected)
   end
