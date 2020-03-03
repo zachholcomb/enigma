@@ -25,6 +25,7 @@ class EnigmaTest < Minitest::Test
     assert_equal 6, @enigma.default_date.length
   end
 
+
   def test_it_can_encrypt_a_message_with_default_values
     @enigma.stubs(:default_date).returns("040895")
     @enigma.stubs(:default_key).returns("02715")
@@ -73,6 +74,7 @@ class EnigmaTest < Minitest::Test
 
   def test_it_can_decrypt_a_message_with_default_values
     @enigma.stubs(:default_key).returns("02715")
+    @enigma.stubs(:default_date).returns("040895")
     expected = {
       decryption: "hello world",
       key: "02715",
@@ -126,7 +128,7 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.encrypt("hello world!")
   end
 
-  def test_it_can_decrypt_a_message_with_default_values
+  def test_it_can_decrypt_a_message_with_special_characters
     @enigma.stubs(:default_date).returns("040895")
     @enigma.stubs(:default_key).returns("02715")
     expected = {
@@ -152,7 +154,7 @@ class EnigmaTest < Minitest::Test
       key: "02715",
       date: "040895"
     }
-    
+
     @enigma.stubs(:default_date).returns("040895")
     assert_equal expected, @enigma.crack("keder ohulwthnw")
   end

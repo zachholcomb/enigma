@@ -11,11 +11,6 @@ class CipherTest < Minitest::Test
     assert_instance_of Cipher, @cipher
   end
 
-  def test_it_can_generate_random_five_digit_number_key
-    assert_instance_of String, @cipher.default_key
-    assert_equal 5, @cipher.generate_random_key.to_s.length
-  end
-
   def test_it_has_attributes
     assert_instance_of ShiftGenerator, @cipher.shift_generator
 
@@ -24,12 +19,24 @@ class CipherTest < Minitest::Test
       "o", "p", "q", "r", "s", "t", "u", "v",
       "w", "x", "y", "z", " "]
     assert_equal expected, @cipher.character_set
-
-    @cipher.stubs(:default_key).returns("02715")
     assert_instance_of String, @cipher.default_key
     assert_equal 5, @cipher.default_key.length
-    assert_equal "02715", @cipher.default_key
     assert_equal "040895", @cipher.default_date
+  end
+
+  def test_it_can_create_default_date
+    assert_instance_of String, @cipher.create_date
+    assert_equal 6, @cipher.create_date.length
+  end
+
+  def test_it_can_generate_random_five_digit_number_key
+    assert_instance_of String, @cipher.generate_random_key
+    assert_equal 5, @cipher.generate_random_key.to_s.length
+  end
+
+  def test_shift_generator_has_attributes
+    assert_instance_of KeyGen, @cipher.shift_generator.key_gen
+    assert_instance_of OffsetGen, @cipher.shift_generator.offset_gen
   end
 
   def test_it_can_chop_message
@@ -75,9 +82,36 @@ class CipherTest < Minitest::Test
     assert_equal "hello world", @cipher.decrypt_message("keder ohulw", expected)
   end
 
+  def test_it_can_split_return_value_of_generate_random_key_into_separate_keys
+    expected = [02, 27, 71, 15]
+    assert_equal expected, @cipher.shift_generator.key_gen.create_key("02715")
+  end
+
   def test_it_can_verify_key
     assert_equal true, @cipher.shift_generator.key_gen.verify_key("02715")
     assert_equal false, @cipher.shift_generator.key_gen.verify_key("999999")
+  end
+
+  def test_it_can_get_last_4_digits_from_sqaure_date
+    squared_date_param = "73018848400"
+    assert_equal "8400", @cipher.shift_generator.offset_gen.last_four_digits(squared_date_param)
+  end
+
+  def test_it_can_separate_last_4_digits_from_square_dates_into_keys
+    four_digits = "8400"
+    expected = [8, 4, 0, 0]
+    assert_equal expected, @cipher.shift_generator.offset_gen.create_offset(four_digits)
+  end
+
+  def test_it_can_get_final_shift_values
+    expected =  [10, 31, 71, 15]
+    assert_equal expected, @cipher.shift_generator.shift_key("02715", "260220")
+  end
+
+  def test_it_can_separate_last_4_digits_from_square_dates_into_keys
+    four_digits = "8400"
+    expected = [8, 4, 0, 0]
+    assert_equal expected, @cipher.shift_generator.offset_gen.create_offset(four_digits)
   end
 
   def test_it_can_verify_input
@@ -87,18 +121,19 @@ class CipherTest < Minitest::Test
     @cipher.stubs(:default_key).returns("02715")
     @cipher.stubs(:default_date).returns("040895")
     assert_equal expected, @cipher.input_verification
+    assert_equal expected, @cipher.input_verification("040895")
   end
 
   def test_it_can_crack_encrypted_message_key_with_default_date
     expected = [3, 27, 73, 20]
     @cipher.stubs(:default_date).returns("040895")
     assert_equal "keder ohulwthnw", @cipher.encrypt_message("hello world end", expected)
-    assert_equal "02715", @cipher.crack_message("keder ohulwthnw")[1]
+    assert_equal [[3, 27, 73, 20], "02715", "040895"], @cipher.crack_message("keder ohulwthnw")
   end
 
   def test_it_can_crack_encrypted_message_given_a_date
     expected = [3, 27, 73, 20]
     assert_equal "keder ohulwthnw", @cipher.encrypt_message("hello world end", expected)
-    assert_equal "02715", @cipher.crack_message("keder ohulwthnw", "040895")[1]
+    assert_equal [[3, 27, 73, 20], "02715", "040895"], @cipher.crack_message("keder ohulwthnw", "040895")
   end
 end

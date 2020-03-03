@@ -13,7 +13,8 @@ class Cipher
     @default_key = generate_random_key
     @default_date = create_date
     @shift_generator = ShiftGenerator.new
-    @character_set = create_character_set
+    @character_set = ("a".."z").to_a << " "
+
   end
 
   def chop_message(message)
