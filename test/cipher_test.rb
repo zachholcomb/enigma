@@ -88,4 +88,17 @@ class CipherTest < Minitest::Test
     @cipher.stubs(:default_date).returns("040895")
     assert_equal expected, @cipher.input_verification
   end
+
+  def test_it_can_crack_encrypted_message_key_with_default_date
+    expected = [3, 27, 73, 20]
+    @cipher.stubs(:default_date).returns("040895")
+    assert_equal "keder ohulwthnw", @cipher.encrypt_message("hello world end", expected)
+    assert_equal "02715", @cipher.crack_message("keder ohulwthnw")[1]
+  end
+
+  def test_it_can_crack_encrypted_message_given_a_date
+    expected = [3, 27, 73, 20]
+    assert_equal "keder ohulwthnw", @cipher.encrypt_message("hello world end", expected)
+    assert_equal "02715", @cipher.crack_message("keder ohulwthnw", "040895")[1]
+  end
 end
