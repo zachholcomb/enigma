@@ -1,4 +1,4 @@
-# enigma
+# Enigma
 Turing BE engineering mod1 final project
 
 ### Self Assessment
