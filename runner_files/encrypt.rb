@@ -1,4 +1,4 @@
-require_relative 'enigma'
+require './lib/enigma'
 
 enigma = Enigma.new
 message_reader = File.open(ARGV[0], "r")
