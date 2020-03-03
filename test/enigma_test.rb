@@ -136,4 +136,24 @@ class EnigmaTest < Minitest::Test
     }
     assert_equal expected, @enigma.decrypt("keder ohulw!")
   end
+
+  def test_it_can_crack_message_with_given_date
+    expected = {
+      decryption: "hello world end",
+      key: "02715",
+      date: "040895"
+    }
+    assert_equal expected, @enigma.crack("keder ohulwthnw", "040895")
+  end
+
+  def test_it_can_crack_message_without_given_date
+    expected = {
+      decryption: "hello world end",
+      key: "02715",
+      date: "040895"
+    }
+    
+    @enigma.stubs(:default_date).returns("040895")
+    assert_equal expected, @enigma.crack("keder ohulwthnw")
+  end
 end

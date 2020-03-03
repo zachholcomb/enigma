@@ -63,4 +63,14 @@ class Cipher
     end
     [@shift_generator.shift_key(key, date), key, date]
   end
+
+  def crack_message(message, date = self.default_date)
+    shift = input_verification(self.default_key, date)
+    until decrypt_message(message, shift[0])[-4..-1] == " end"
+      key = generate_random_key
+      shift = input_verification(key, date)
+      decrypt_message(message, shift[0])
+    end
+    shift
+  end
 end

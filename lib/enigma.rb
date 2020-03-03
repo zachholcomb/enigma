@@ -21,4 +21,12 @@ class Enigma < Cipher
       date: shift[2]
     }
   end
+
+  def crack(message, date = self.default_date)
+    cracked_message_key = crack_message(message, date)
+    { decryption: decrypt_message(message, cracked_message_key[0]),
+      key: cracked_message_key[1],
+      date: cracked_message_key[2]
+    }
+  end
 end
