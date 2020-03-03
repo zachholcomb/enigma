@@ -2,7 +2,7 @@ require_relative 'key_gen'
 require_relative 'offset_gen'
 
 class ShiftGenerator
-  attr_reader :key_gen, :offset_gen, :shift
+  attr_reader :key_gen, :offset_gen
 
   def initialize
     @key_gen = KeyGen.new

@@ -1,10 +1,6 @@
 require 'date'
 
 module Generable
-  def create_character_set
-    ("a".."z").to_a << " "
-  end
-
   def generate_random_key
     rand_num = ""
     until rand_num.length == 5
